@@ -30,13 +30,11 @@ const fetcher = (args) => {
   const src = args[0];
   const filePath = args[1];
   request(src, (error, response, body) => {
-    fs.exists(filePath, (exists) => {
-      if (exists) {
-        promptOverwrite(filePath, body);
-      } else {
-        writeToFile(filePath, body);
-      }
-    });
+    if (fs.existsSync(filePath)) {
+      promptOverwrite(filePath, body);
+    } else {
+      writeToFile(filePath, body);
+    }
   });
 
 };
